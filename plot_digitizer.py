@@ -2,7 +2,7 @@
 import cv2
 import tkinter as tk
 import numpy as np
-from tkinter.filedialog import askopenfilename
+from tkinter.filedialog import askopenfilename, asksaveasfile
 import csv
 
 
@@ -23,6 +23,12 @@ y_pix_scale=[]
 y_num_scale=[]
 x_flag=0
 y_flag=0
+
+
+def check_null_str(input_str):
+    if input_str == '' or input_str is None:
+        print('No file input given!')
+        exit()
 
 def click_event(event, x, y, flags, params):
     global count,dataPoints,x_pix_scale,x_num_scale,y_num_scale,y_pix_scale,y_flag,x_flag
@@ -81,8 +87,7 @@ if __name__=="__main__":
     # reading the image
     file_path = askopenfilename()
     print(file_path)
-    if file_path == '':
-        exit()
+    check_null_str(file_path)
     img = cv2.imread(file_path, 1)
 
     #resizing to get in window
@@ -96,12 +101,15 @@ if __name__=="__main__":
     
     # wait for a key to be pressed to exit
     cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
-    with open('Data.csv', 'w', newline ='') as f:
-      
+    save_file_path = asksaveasfile()
+    check_null_str(save_file_path)
+
+    with open(save_file_path, 'w', newline ='') as f:
         # using csv.writer method from CSV package
         write = csv.writer(f)
         write.writerows(dataPoints)
 
-    cv2.destroyAllWindows()
+
 
