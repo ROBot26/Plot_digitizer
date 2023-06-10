@@ -2,7 +2,7 @@
 import cv2
 import tkinter as tk
 import numpy as np
-from tkinter.filedialog import askopenfilename, asksaveasfile
+from tkinter.filedialog import askopenfilename, asksaveasfilename
 import csv
 
 
@@ -73,8 +73,8 @@ def click_event(event, x, y, flags, params):
             dataPoints.append([x_val,y_val])
             font = cv2.FONT_HERSHEY_SIMPLEX
             print(x_val,y_val)
-            cv2.putText(img_s,str(round(x_val,1)) + ',' + str(round(y_val,1)), (x+10,y), font,
-                    .5, color, 2)
+            #cv2.putText(img_s,str(round(x_val,1)) + ',' + str(round(y_val,1)), (x+10,y), font,
+            #        .5, color, 2)
         cv2.circle(img_s,(x,y),5,color,2)
 
         cv2.imshow('Plot', img_s)
@@ -103,7 +103,7 @@ if __name__=="__main__":
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-    save_file_path = asksaveasfile()
+    save_file_path = asksaveasfilename()
     check_null_str(save_file_path)
 
     with open(save_file_path, 'w', newline ='') as f:
